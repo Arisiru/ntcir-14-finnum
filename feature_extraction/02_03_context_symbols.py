@@ -30,4 +30,3 @@ for entry in data:
     entry["features"]["target_num_symbols_context_vectors"] = context_vectors
 
 json.dump(data, open(os.path.join("..", "data", "features" ,"all_features_4.json"), "w"))
-
