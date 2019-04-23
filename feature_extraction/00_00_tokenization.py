@@ -26,9 +26,10 @@ for c in " \t\n":
 
 system_tokens = set([
     "systicker",
+    "systag",
     "sysurl",
-    "sysfloats",
-    "sysints"
+    "sysfloat",
+    "sysint"
 ])
 
 def tokenize(input):
@@ -48,10 +49,10 @@ def tokenize(input):
     input = re.sub(r"(?P<dots>\.{2,10})(?P<number>\d)", r"\g<dots> \g<number>", input)
     
     floats = re.findall(r"\d*(?:\,\d+)*\.\d+", input)
-    input = re.sub(r"\d*(?:\,\d+)*\.\d+", " sysfloats ", input)
+    input = re.sub(r"\d*(?:\,\d+)*\.\d+", " sysfloat ", input)
     
     ints = re.findall(r"\d+(?:\,\d\d\d)*", input)
-    input = re.sub(r"\d+(?:\,\d\d\d)*", " sysints ", input)
+    input = re.sub(r"\d+(?:\,\d\d\d)*", " sysint ", input)
 
     prev_c_type = None
     current_token = []
@@ -83,7 +84,7 @@ def tokenize(input):
     i_ints = 0
     i_floats = 0
     for i_numders, token in enumerate(tokens_terms):
-        if token == "sysfloats":
+        if token == "sysfloat":
             numeric_value = floats[i_floats]
             i_floats += 1
             numbers.append({
@@ -91,7 +92,7 @@ def tokenize(input):
                 "value": numeric_value,
                 "isInt": False,
             })
-        elif token == "sysints":
+        elif token == "sysint":
             numeric_value = ints[i_ints]
             i_ints += 1
             numbers.append({
@@ -110,7 +111,7 @@ def tokenize(input):
     
     i_numders = 0
     for indx, token in enumerate(tokens_symbols):
-        if token == "sysfloats" or token == "sysints":
+        if token == "sysfloat" or token == "sysint":
             numbers[i_numders]["index_symbols"] = indx
             i_numders += 1
 
